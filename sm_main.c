@@ -60,12 +60,12 @@ int main()
             
             // run 4 star matching
 
-            sm_4_star(four_stars, sm_3D_vecs, sm_IS, sm_K_vec_arr, N_match, N_i, N_gc, epsilon, q, m);
+            sm_4_star(four_stars, sm_3D_vecs, sm_IS, sm_K_vec_arr, &N_match, N_i, N_gc, epsilon, q, m);
 
             if (N_match == 0)
             {
                 // circulate
-                sm_4_star_circulate(sm_3D_vecs, N_circ, N_i);
+                sm_4_star_circulate(sm_3D_vecs, &N_circ, N_i);
                 if (N_circ >= 2 * N_i)
                 {
                     break;
