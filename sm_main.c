@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h> /* memset */
+// #include <unistd.h>
 
+#include "newsort.h"
 #include "sm_sort_euclid_dist.h"
 #include "sm_gnrt_3D_vecs.h"
 #include "sm_4_star_main.h"
@@ -76,10 +78,8 @@ int main()
     
     memset(sm_IS, -1, sizeof(sm_IS[0]) * N_uis);
     //--------------------------------------------------------
-    // specific to  a particular test
     
     m = (y_max - y_min + 2 * epsilon) / (N_gc - 1);
-    printf("m = %lf\n", m);
     q = y_min - m - epsilon;
 
     // -------------------------------------------------------
@@ -109,7 +109,7 @@ int main()
             UIS[i][j] = tempp;
         }
         // temp[i] = UIS[i][1] * UIS[i][1] + UIS[i][2] * UIS[i][2];
-        printf("%d %.24lf %.24lf\n", (int)UIS[i][0], UIS[i][1], UIS[i][2]);
+        // printf("%d %.24lf %.24lf\n", (int)UIS[i][0], UIS[i][1], UIS[i][2]);
     }
     // printf("%d %.12lf %.12lf", (int)UIS[1][0], UIS[1][1], UIS[1][2]);
     fclose(file2);
@@ -123,10 +123,10 @@ int main()
 
     sm_gnrt_3D_vec(sm_3D_vecs, UIS, foc, N_i);
 
-    for (int i = 0; i < N_i; i++)
-    {
-        printf("%lf %lf %lf %lf\n", sm_3D_vecs[i][0], sm_3D_vecs[i][1], sm_3D_vecs[i][2], sm_3D_vecs[i][3]);
-    }
+    // for (int i = 0; i < N_i; i++)
+    // {
+    //     printf("%lf %lf %lf %lf\n", sm_3D_vecs[i][0], sm_3D_vecs[i][1], sm_3D_vecs[i][2], sm_3D_vecs[i][3]);
+    // }
     
     int circ_flag = 1;
     for (int i = 1; i <= N_max; i++)
