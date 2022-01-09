@@ -7,13 +7,8 @@ void sm_gnrt_3D_vec(double sm_3D_vecs[][4],double sm_sorted_UIS[][3], double foc
     {
         double local = sqrt((sm_sorted_UIS[i][1] / foc) * (sm_sorted_UIS[i][1] / foc) + (sm_sorted_UIS[i][2] / foc) * (sm_sorted_UIS[i][2] / foc) + 1);
         sm_3D_vecs[i][0] = sm_sorted_UIS[i][0];
-        sm_3D_vecs[i][1] = (sm_sorted_UIS[i][1] / foc) * local;
-        sm_3D_vecs[i][2] = (sm_sorted_UIS[i][2] / foc) * local;
-        sm_3D_vecs[i][3] = local;
-        // printf("bru%lf\n", sm_3D_vecs[i][3]*sm_3D_vecs[i][3]+sm_3D_vecs[i][1]*sm_3D_vecs[i][1]+sm_3D_vecs[i][2]*sm_3D_vecs[i][2]);
-        double norm = sqrt(sm_3D_vecs[i][3] * sm_3D_vecs[i][3] + sm_3D_vecs[i][1] * sm_3D_vecs[i][1] + sm_3D_vecs[i][2] * sm_3D_vecs[i][2]);
-        sm_3D_vecs[i][1] /= norm;
-        sm_3D_vecs[i][2] /= norm;
-        sm_3D_vecs[i][3] /= norm;
+        sm_3D_vecs[i][1] = (sm_sorted_UIS[i][1] / (foc*local));
+        sm_3D_vecs[i][2] = (sm_sorted_UIS[i][2] / (foc*local));
+        sm_3D_vecs[i][3] = 1/local;
     }
 }
