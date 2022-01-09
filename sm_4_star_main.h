@@ -3,7 +3,18 @@
 #include <math.h>
 double SIM[5060][6];
 
-void sm_4_star (double four_stars[][4], double sm_3D_vecs[][4], int sm_IS[], int sm_K_vec_arr[][3], int *N_match, int N_i, int N_gc, double delta, double q, double m)
+int already_matched(int sm_IS[][2],int indx){
+    for (int i = 0; i < 5060; i++)
+    {
+        if (sm_IS[i][0]==indx)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void sm_4_star (double four_stars[][4], double sm_3D_vecs[][4], int sm_IS[][2], int sm_K_vec_arr[][3], int *N_match, int N_i, int N_gc, double delta, double q, double m)
 {
     double p[6];
     int ct = 0;
@@ -41,7 +52,6 @@ void sm_4_star (double four_stars[][4], double sm_3D_vecs[][4], int sm_IS[], int
             {
                 k_bot = 0;
             }
-            
             int k_start = sm_K_vec_arr[k_bot][0] + 1;
             int k_end = sm_K_vec_arr[k_top][0];
             // printf("k_start = %d, k_end = %d\n", k_start, k_end);
@@ -56,8 +66,8 @@ void sm_4_star (double four_stars[][4], double sm_3D_vecs[][4], int sm_IS[], int
     for (int j = 0; j < 4; j++)
     {
         int matched_rows = 0;
-        int k = 0;
-        for (; k < N_gc; k++)
+        int temp = 0;
+        for (int k = 0; k < N_gc; k++)
         {
             if (SIM[k][0] == checks[j][0]
              && SIM[k][1] == checks[j][1]
@@ -67,27 +77,40 @@ void sm_4_star (double four_stars[][4], double sm_3D_vecs[][4], int sm_IS[], int
              && SIM[k][5] == checks[j][5])
             {
                 matched_rows++;
+                temp = k;
                 printf("matched\n");
             }
         }
         if (matched_rows == 1)
         {
-            printf("1\n");
-            if (sm_IS[(int)four_stars[j][0]] == -1)
+            printf("ffff %d  %d\n", sm_IS[0][0], (int)four_stars[0][0]);
+            int jj = already_matched(sm_IS, (int)four_stars[j][0]);
+            if (jj== 0) // checking if that star has earlier been matched
             {
                 printf("2\n");
                 N_match++;
                 for (int k = 0; k < N_i; k++)
                 {
-                    // printf("3\n");
-                    if ((int)sm_3D_vecs[k][0] == (int)four_stars[j][0])
+                    // below is the substitute for removing the identified star from the 3D vector array
+                    if ((int)sm_3D_vecs[k][0] == (int)four_stars[j][0]) 
                     {
                         printf("44\n");
                         sm_3D_vecs[k][0] = -1;
+                        break;
                     }
                 }
             }
-            sm_IS[(int)four_stars[j][0]] = k;
+            for (int i = 0; i < 5060; i++)
+            {
+                if (sm_IS[i][0]==-1)
+                {
+                    sm_IS[i][0] = (int)four_stars[j][0];
+                    sm_IS[i][1] = temp;
+                    break;
+                }
+                
+            }
+   
         }
     }
 }
