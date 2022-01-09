@@ -74,9 +74,13 @@ int main()
     
     // double sm_sorted_UIS[N_i][3];
     double sm_3D_vecs[N_i][4];
-    int sm_IS[5060];
-    
-    memset(sm_IS, -1, sizeof(sm_IS[0]) * 5060);
+    int sm_IS[5060][2];
+    for (int i = 0; i < 5060; i++)
+    {
+        sm_IS[i][0] = -1;
+        sm_IS[i][1] = -1;
+    }
+
     // printf("%d %d\n",sm_IS[0],sm_IS[4]);
     //--------------------------------------------------------
     
@@ -132,14 +136,9 @@ int main()
         if (N_uis >= 4 && N_is < N_th)
         {
             int N_match = 0;
-            double four_stars[4][4];
-            int countt = 0;
-            for (int j = 0; j < N_i; j++)
+            double four_stars[4][4];;
+            for (int countt = 0, j = 0; j < N_i && countt < 4; j++)
             {
-                if (countt==4)
-                {
-                    break;
-                }
                 if ((int)sm_3D_vecs[j][0] != -1)
                 {
                     for (int k = 0; k < 4; k++)
@@ -149,7 +148,6 @@ int main()
                     countt++;
                 }
             }
-            printf("count %d\n",countt);
             // run 4 star matching
 
             sm_4_star(four_stars, sm_3D_vecs, sm_IS, sm_K_vec_arr, &N_match, N_i, N_gc, delta, q, m);
@@ -169,8 +167,11 @@ int main()
             break;
         }
     }
-    for (int i = 0; i < N_uis; i++)
+    for (int i = 0; i < 5060; i++)
     {
-        printf("%d  %d\n", (int)sm_3D_vecs[i][0], sm_IS[(int)sm_3D_vecs[i][0]]);
+        if (sm_IS[i][0]!=-1)
+        {
+            printf("%d  %d  %d\n",i,sm_IS[i][0],sm_IS[i][1]);
+        }
     }
 }
